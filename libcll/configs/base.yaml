@@ -1,0 +1,25 @@
+model:
+  _name: ???
+  hidden_dim: 256
+dataset:
+  _name: ???
+  num_cl: 1
+  augment: False
+  valid_split: 0.1
+  transition_matrix: uniform
+optimizer:
+  lr: 1e-4
+strategy:
+  _name: ???
+  type: ???
+training:
+  config_file: ???
+  batch_size: 256
+  epoch: 300
+  valid_type: ???
+  eval_epoch: 10
+  do_train: False
+  do_predict: False
+  log_step: 50
+  seed: 1126
+  output_dir: ???

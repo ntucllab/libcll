@@ -1,0 +1,9 @@
+torch
+torchvision
+torchmetrics
+pytorch-lightning>=2.0.0
+omegaconf-argparse
+scikit-learn
+tensorboardX
+pandas
+gdown
