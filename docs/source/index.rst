@@ -25,7 +25,7 @@ Installation
 
 .. code-block:: shell
 
-   git clone git@github.com:yahcreepers/libcll.git
+   git clone git@github.com:ntucllab/libcll.git
    cd libcll
    pip install -e .
 
