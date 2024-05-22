@@ -5,6 +5,7 @@ import pickle
 import gdown
 import os
 
+
 def _cifar100_to_cifar20(target):
     # obtained from cifar_test script
     _dict = {
@@ -112,6 +113,7 @@ def _cifar100_to_cifar20(target):
 
     return _dict[target]
 
+
 class CLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
     """
 
@@ -122,16 +124,16 @@ class CLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
 
     train : bool
         training set if True, else testing set.
-    
+
     transform : callable, optional
         a function/transform that takes in a PIL image and returns a transformed version.
-    
+
     target_transform : callable, optional
         a function/transform that takes in the target and transforms it.
-    
+
     download : bool
         if true, downloads the dataset from the internet and puts it in root directory. If dataset is already downloaded, it is not downloaded again.
-    
+
     num_cl : int
         the number of real-world complementary labels of each data chosen from [1, 3].
 
@@ -142,7 +144,7 @@ class CLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
 
     targets : Tensor
         the complementary labels for corresponding sample.
-    
+
     true_targets : Tensor
         the ground-truth labels for corresponding sample.
 
@@ -153,6 +155,7 @@ class CLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
         the feature space after data compressed into a 1D dimension.
 
     """
+
     def __init__(
         self,
         root="./data/cifar20",
@@ -160,13 +163,15 @@ class CLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
         transform=None,
         target_transform=None,
         download=True,
-        num_cl=1, 
+        num_cl=1,
     ):
         if train:
             dataset_path = f"{root}/clcifar20.pkl"
             if download and not os.path.exists(dataset_path):
                 os.makedirs(root, exist_ok=True)
-                gdown.download(id="1PhZsyoi1dAHDGlmB4QIJvDHLf_JBsFeP", output=dataset_path)
+                gdown.download(
+                    id="1PhZsyoi1dAHDGlmB4QIJvDHLf_JBsFeP", output=dataset_path
+                )
             with open(dataset_path, "rb") as f:
                 data = pickle.load(f)
             self.data = data["images"]
@@ -180,6 +185,6 @@ class CLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
             )
             self.targets = [_cifar100_to_cifar20(i) for i in self.targets]
             self.targets = torch.Tensor(self.targets)
-            
+
         self.num_classes = 20
         self.input_dim = 3 * 32 * 32

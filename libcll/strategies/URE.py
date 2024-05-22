@@ -5,16 +5,21 @@ import torch.nn.functional as F
 import numpy as np
 from libcll.strategies.Strategy import Strategy
 
+
 class URE(Strategy):
     def __init__(self, **args):
         if args["type"] == "GA" or args["type"] == "NN":
-            Q = torch.ones(args["num_classes"], args["num_classes"]) * 1 / (args["num_classes"] - 1)
+            Q = (
+                torch.ones(args["num_classes"], args["num_classes"])
+                * 1
+                / (args["num_classes"] - 1)
+            )
             for k in range(args["num_classes"]):
                 Q[k, k] = 0
             args["Q"] = Q
         super().__init__(**args)
         self.beta = 0
-    
+
     def custom_non_negative_loss(self, output, labels, beta):
         class_priors = self.class_priors.requires_grad_().to(output.device)
         neglog = -F.log_softmax(output, dim=1)
@@ -31,7 +36,7 @@ class URE(Strategy):
         loss.requires_grad_()
         loss_vector.requires_grad_()
         return loss, loss_vector
-    
+
     def training_step(self, batch, batch_idx):
         x, y = batch
         out = self.model(x)
@@ -48,11 +53,13 @@ class URE(Strategy):
 
         elif self.type == "TNN" or self.type == "NN":
             loss, loss_vector = self.custom_non_negative_loss(
-                out, 
-                y, 
-                self.beta, 
+                out,
+                y,
+                self.beta,
             )
             self.log("Train_Loss", loss)
             return loss
         else:
-            raise NotImplementedError('The type of URE must be chosen from "NN", "TNN", "GA" or "TGA".')
+            raise NotImplementedError(
+                'The type of URE must be chosen from "NN", "TNN", "GA" or "TGA".'
+            )

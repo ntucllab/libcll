@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+
 class Linear(nn.Module):
     """
     Parameters
@@ -10,6 +11,7 @@ class Linear(nn.Module):
     num_classes : int
         the number of classes.
     """
+
     def __init__(self, input_dim, num_classes=10):
         super().__init__()
         self.layer = nn.Sequential(

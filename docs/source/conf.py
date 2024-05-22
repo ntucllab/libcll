@@ -9,9 +9,9 @@ from unittest.mock import MagicMock
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'libcll'
-copyright = '2024, Nai Xuan Ye'
-author = 'Nai Xuan Ye'
+project = "libcll"
+copyright = "2024, Nai Xuan Ye"
+author = "Nai Xuan Ye"
 release = "1.0.0"
 version = "1.0.0"
 
@@ -34,18 +34,18 @@ napoleon_use_admonition_for_examples = True
 napoleon_use_admonition_for_references = True
 
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.coverage',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.napoleon',
-    'sphinx.ext.viewcode',
-    'numpydoc',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.coverage",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.viewcode",
+    "numpydoc",
 ]
 
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 # How to represents typehints
 autodoc_typehints = "signature"
 

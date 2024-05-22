@@ -3,6 +3,7 @@ import torch
 import torch.nn.functional as F
 from libcll.strategies.Strategy import Strategy
 
+
 class MCL(Strategy):
     def training_step(self, batch, batch_idx):
         x, y = batch

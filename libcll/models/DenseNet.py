@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import torchvision.models as models
 import math
 
+
 class DenseLayer(nn.Module):
     def __init__(self, input_features, expansion=4, growthRate=12, drop_rate=0):
         super(DenseLayer, self).__init__()
@@ -59,6 +60,7 @@ class TransitionLayer(nn.Module):
     def forward(self, x):
         return self.layer(x)
 
+
 class DenseNet(nn.Module):
     """
     Parameters
@@ -74,6 +76,7 @@ class DenseNet(nn.Module):
     num_classes : int
         the number of classes.
     """
+
     def __init__(
         self,
         num_layers=[16, 16, 16],

@@ -4,6 +4,7 @@ from torch.optim import Adam
 from torch.utils.data import DataLoader
 import pytorch_lightning as pl
 
+
 class Strategy(pl.LightningModule):
     """
     libcll strategy object
@@ -27,20 +28,21 @@ class Strategy(pl.LightningModule):
 
     Q : Tensor
         the class transition probability matrix. Initialized as uniform distribution if None.
-    
+
     class_priors : Tensor
         the class priors.
 
     """
+
     def __init__(
-        self, 
+        self,
         model=None,
         num_classes=10,
-        valid_type="SCEL", 
+        valid_type="SCEL",
         type="NL",
         lr=1e-4,
         Q=None,
-        class_priors=None, 
+        class_priors=None,
     ):
         super().__init__()
         self.model = model
@@ -67,7 +69,7 @@ class Strategy(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         pass
-    
+
     def compute_ure(self, out, y):
         """
         Compute the Unbiased Risk Estimator loss.
@@ -76,7 +78,7 @@ class Strategy(pl.LightningModule):
         loss_mat = torch.mm(out, self.Qinv.t())
         loss = -F.nll_loss(loss_mat, y.long())
         return loss
-    
+
     def compute_scel(self, out, y):
         """
         Compute the Surrogate Complementary Esimation Loss.
@@ -86,7 +88,7 @@ class Strategy(pl.LightningModule):
         out = (out + 1e-6).log()
         loss = F.nll_loss(out, y.long())
         return loss
-    
+
     def compute_acc(self, out, y):
         """
         Compute the Accuracy.

@@ -18,13 +18,13 @@ class CLTexture(CLBaseDataset):
 
     train : bool
         training set if True, else testing set.
-    
+
     transform : callable, optional
         a function/transform that takes in a PIL image and returns a transformed version.
-    
+
     target_transform : callable, optional
         a function/transform that takes in the target and transforms it.
-    
+
     download : bool
         if true, downloads the dataset from the internet and puts it in root directory. If dataset is already downloaded, it is not downloaded again.
 
@@ -35,7 +35,7 @@ class CLTexture(CLBaseDataset):
 
     targets : Tensor
         the complementary labels for corresponding sample.
-    
+
     true_targets : Tensor
         the ground-truth labels for corresponding sample.
 
@@ -46,6 +46,7 @@ class CLTexture(CLBaseDataset):
         the feature space after data compressed into a 1D dimension.
 
     """
+
     def __init__(
         self,
         root="./data/texture",

@@ -11,8 +11,10 @@ class CPE(Strategy):
         super().__init__(**args)
         if self.type == "T":
             self.Q = self.Q.log()
-            self.model.register_parameter(name='Q', param=torch.nn.Parameter(self.Q, requires_grad=True))
-    
+            self.model.register_parameter(
+                name="Q", param=torch.nn.Parameter(self.Q, requires_grad=True)
+            )
+
     def training_step(self, batch, batch_idx):
         x, y = batch
         out = self.model(x)
@@ -34,13 +36,13 @@ class CPE(Strategy):
             )
         self.log("Train_Loss", loss)
         return loss
-    
+
     def validation_step(self, batch, batch_idx):
         x, y = batch
         out = self.model(x)
         if self.valid_type != "SCEL" and self.valid_type != "Accuracy":
             raise ValueError(
-                f'The Validation Loss of CPE can only be SCEL or Accuracy.'
+                f"The Validation Loss of CPE can only be SCEL or Accuracy."
             )
         out = F.softmax(out, dim=1)
         if self.type == "I":
@@ -56,7 +58,7 @@ class CPE(Strategy):
             raise NotImplementedError(
                 'The type of CPE must be chosen from "I", "F" or "T".'
             )
-        
+
         if self.valid_type == "SCEL":
             val_loss = F.nll_loss(out.log(), y.long())
         if self.valid_type == "Accuracy":
@@ -78,7 +80,7 @@ class CPE(Strategy):
             Q = self.model.Q
             Q = F.softmax(Q, dim=1)
             out = torch.mm(out, Q) + 1e-6
-        
+
         y_pred = torch.argmin(torch.abs(out.unsqueeze(dim=1) - Q).sum(dim=2), dim=1)
         acc = (y_pred == y).sum() / y_pred.shape[0]
         self.test_acc.append(acc)

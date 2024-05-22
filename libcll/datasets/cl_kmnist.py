@@ -14,13 +14,13 @@ class CLKMNIST(torchvision.datasets.KMNIST, CLBaseDataset):
 
     train : bool
         training set if True, else testing set.
-    
+
     transform : callable, optional
         a function/transform that takes in a PIL image and returns a transformed version.
-    
+
     target_transform : callable, optional
         a function/transform that takes in the target and transforms it.
-    
+
     download : bool
         if true, downloads the dataset from the internet and puts it in root directory. If dataset is already downloaded, it is not downloaded again.
 
@@ -31,7 +31,7 @@ class CLKMNIST(torchvision.datasets.KMNIST, CLBaseDataset):
 
     targets : Tensor
         the complementary labels for corresponding sample.
-    
+
     true_targets : Tensor
         the ground-truth labels for corresponding sample.
 
@@ -42,6 +42,7 @@ class CLKMNIST(torchvision.datasets.KMNIST, CLBaseDataset):
         the feature space after data compressed into a 1D dimension.
 
     """
+
     def __init__(
         self,
         root="./data/kmnist",
@@ -55,7 +56,7 @@ class CLKMNIST(torchvision.datasets.KMNIST, CLBaseDataset):
         )
         self.num_classes = 10
         self.input_dim = 1 * 28 * 28
-    
+
     def __getitem__(self, index):
         img, target = self.data[index], self.targets[index]
         img = Image.fromarray(img.numpy(), mode="L")

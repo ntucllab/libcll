@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
 
+
 class ResNet(nn.Module):
     """
     Parameters
@@ -10,6 +11,7 @@ class ResNet(nn.Module):
     num_classes : int
         the number of classes.
     """
+
     def __init__(self, num_classes=10):
         super().__init__()
         self.resnet = models.resnet34(num_classes=num_classes)

@@ -1,6 +1,6 @@
 # libcll: Complementary Label Learning Benchmark
 
-# Introduction
+[![Documentation Status](https://readthedocs.org/projects/libcll/badge/?version=latest)](https://libcll.readthedocs.io/en/latest/?badge=latest)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 `libcll` is a Python package designed to make complementary label learning easier for real-world researchers. The package not only implements most of the popular complementary label learning strategies, including CPE, a SOTA algorithm in 2023 but also features CLCIFAR10 and CLCIFAR20 datasets, both of which collect complementary labels from humans.  In addition, the package provides a unified interface for adding more strategies, datasets, and models. 
 
@@ -70,7 +70,7 @@ or
 
 ## Documentation
 
-
+Find full [tutorials](https://libcll.readthedocs.io/en/latest/) for libcll.
 
 ## Acknowledgment
 

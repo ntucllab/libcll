@@ -4,6 +4,7 @@ import torch
 from torch.utils.data import Dataset
 import torch.nn.functional as F
 
+
 class CLBaseDataset(Dataset):
     """
     libcll dataset object
@@ -15,7 +16,7 @@ class CLBaseDataset(Dataset):
 
     Y : Tensor
         the ground-true labels for corresponding sample.
-    
+
     num_classes : int
         the number of classes
 
@@ -26,7 +27,7 @@ class CLBaseDataset(Dataset):
 
     targets : Tensor
         the complementary labels for corresponding sample.
-    
+
     true_targets : Tensor
         the ground-truth labels for corresponding sample.
 
@@ -37,6 +38,7 @@ class CLBaseDataset(Dataset):
         the feature space after data compressed into a 1D dimension.
 
     """
+
     def __init__(self, X, Y, num_classes):
         self.data = X
         self.targets = Y
@@ -44,13 +46,13 @@ class CLBaseDataset(Dataset):
         self.input_dim = 1
         for i in range(len(self.data[0].shape)):
             self.input_dim *= self.data[0].shape[i]
-    
+
     def __getitem__(self, index):
         return self.data[index], self.targets[index]
-    
+
     def __len__(self):
         return len(self.targets)
-    
+
     def gen_complementary_target(self, num_cl=1, Q=None):
         """
         Generate complementary labels for each data.
@@ -65,7 +67,9 @@ class CLBaseDataset(Dataset):
 
         """
         if Q == None:
-            Q = torch.ones(self.num_classes, self.num_classes) - torch.eye(self.num_classes)
+            Q = torch.ones(self.num_classes, self.num_classes) - torch.eye(
+                self.num_classes
+            )
             Q = Q / (self.num_classes - 1)
         if getattr(self, "true_targets", None) == None:
             self.true_targets = copy.deepcopy(self.targets)
@@ -78,8 +82,15 @@ class CLBaseDataset(Dataset):
             p_s /= 2 ** (self.num_classes - 1) - 1
         for i in range(len(self.true_targets)):
             if num_cl == 0:
-                nc = np.random.choice(np.arange(1, self.num_classes), 1, p=p_s.numpy(), replace=False)
+                nc = np.random.choice(
+                    np.arange(1, self.num_classes), 1, p=p_s.numpy(), replace=False
+                )
             else:
                 nc = num_cl
-            cl = np.random.choice(np.arange(self.num_classes), nc, p=Q[self.true_targets[i].long()].numpy(), replace=False)
+            cl = np.random.choice(
+                np.arange(self.num_classes),
+                nc,
+                p=Q[self.true_targets[i].long()].numpy(),
+                replace=False,
+            )
             self.targets.append(torch.tensor(cl, dtype=self.true_targets.dtype))

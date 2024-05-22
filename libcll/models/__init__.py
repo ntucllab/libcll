@@ -5,21 +5,20 @@ from .ResNet import ResNet
 from .DenseNet import DenseNet
 
 MODEL_LIST = {
-    "Linear": Linear, 
-    "MLP": MLP, 
-    "ResNet": ResNet, 
-    "DenseNet": DenseNet, 
+    "Linear": Linear,
+    "MLP": MLP,
+    "ResNet": ResNet,
+    "DenseNet": DenseNet,
 }
+
 
 def build_model(model, input_dim=None, hidden_dim=None, num_classes=None):
     if model not in MODEL_LIST:
-        raise ValueError(
-            f'Model must be chosen from {list(MODEL_LIST.keys())}.'
-        )
+        raise ValueError(f"Model must be chosen from {list(MODEL_LIST.keys())}.")
     args = {
-        "input_dim": input_dim, 
-        "hidden_dim": hidden_dim, 
-        "num_classes": num_classes
+        "input_dim": input_dim,
+        "hidden_dim": hidden_dim,
+        "num_classes": num_classes,
     }
     model = MODEL_LIST[model]
     model_args = inspect.getargspec(model.__init__).args

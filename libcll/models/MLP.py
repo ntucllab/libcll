@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+
 class MLP(nn.Module):
     """
     Parameters
@@ -12,6 +13,7 @@ class MLP(nn.Module):
     num_classes : int
         the number of classes.
     """
+
     def __init__(self, input_dim, hidden_dim, num_classes=10):
         super().__init__()
         self.layer = nn.Sequential(
