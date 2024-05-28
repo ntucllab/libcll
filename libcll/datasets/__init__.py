@@ -12,6 +12,8 @@ from .cl_dermatology import CLDermatology
 from .cl_fmnist import CLFMNIST
 from .cl_kmnist import CLKMNIST
 from .cl_mnist import CLMNIST
+from .cl_tiny_imagenet10 import CLTiny_ImageNet10
+from .cl_tiny_imagenet20 import CLTiny_ImageNet20
 from .utils import get_transition_matrix, collate_fn_multi_label, collate_fn_one_hot
 
 
@@ -103,7 +105,9 @@ def prepare_dataloader(
             transform=train_transform,
         )
         test_set = CLCIFAR10(
-            root="./data/cifar10", train=False, transform=test_transform
+            root="./data/cifar10",
+            train=False,
+            transform=test_transform,
         )
 
         Q = get_transition_matrix(transition_matrix, train_set.num_classes, noise, seed)
@@ -282,6 +286,122 @@ def prepare_dataloader(
             num_cl=num_cl,
         )
 
+    elif dataset == "tiny_imagenet10":
+        train_transform = transforms.Compose(
+            [
+                transforms.RandomCrop(64, padding=8),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            ]
+        )
+        test_transform = transforms.Compose(
+            [
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            ]
+        )
+        train_set = CLTiny_ImageNet10(
+            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet10_complementary",
+            train=True,
+            transform=train_transform,
+            num_cl=num_cl,
+        )
+        test_set = CLTiny_ImageNet10(
+            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet10_complementary",
+            train=False,
+            transform=test_transform,
+            num_cl=num_cl,
+        )
+        Q = get_transition_matrix(transition_matrix, train_set.num_classes, noise, seed)
+        train_set.gen_complementary_target(num_cl, Q)
+
+    elif dataset == "tiny_imagenet20":
+        train_transform = transforms.Compose(
+            [
+                transforms.RandomCrop(64, padding=8),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            ]
+        )
+        test_transform = transforms.Compose(
+            [
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            ]
+        )
+        train_set = CLTiny_ImageNet20(
+            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet20_complementary",
+            train=True,
+            transform=train_transform,
+            num_cl=num_cl,
+        )
+        test_set = CLTiny_ImageNet20(
+            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet20_complementary",
+            train=False,
+            transform=test_transform,
+            num_cl=num_cl,
+        )
+        Q = get_transition_matrix(transition_matrix, train_set.num_classes, noise, seed)
+        train_set.gen_complementary_target(num_cl, Q)
+
+    elif dataset == "cltiny_imagenet10":
+        train_transform = transforms.Compose(
+            [
+                transforms.RandomCrop(64, padding=8),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            ]
+        )
+        test_transform = transforms.Compose(
+            [
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            ]
+        )
+        train_set = CLTiny_ImageNet10(
+            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet10_complementary",
+            train=True,
+            transform=train_transform,
+            num_cl=num_cl,
+        )
+        test_set = CLTiny_ImageNet10(
+            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet10_complementary",
+            train=False,
+            transform=test_transform,
+            num_cl=num_cl,
+        )
+
+    elif dataset == "cltiny_imagenet20":
+        train_transform = transforms.Compose(
+            [
+                transforms.RandomCrop(64, padding=8),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            ]
+        )
+        test_transform = transforms.Compose(
+            [
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            ]
+        )
+        train_set = CLTiny_ImageNet20(
+            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet20_complementary",
+            train=True,
+            transform=train_transform,
+            num_cl=num_cl,
+        )
+        test_set = CLTiny_ImageNet20(
+            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet20_complementary",
+            train=False,
+            transform=test_transform,
+            num_cl=num_cl,
+        )
+
     else:
         raise NotImplementedError
 
@@ -298,7 +418,13 @@ def prepare_dataloader(
         train_set,
         sampler=train_sampler,
         batch_size=batch_size,
-        collate_fn=collate_fn_one_hot if one_hot else collate_fn_multi_label,
+        collate_fn=(
+            collate_fn_multi_label
+            if not one_hot
+            else lambda batch: collate_fn_one_hot(
+                batch, num_classes=train_set.num_classes
+            )
+        ),
         shuffle=False,
         num_workers=4,
     )
@@ -318,7 +444,7 @@ def prepare_dataloader(
         Q[train_set.true_targets[idx].long()][train_set.targets[idx].long()] += 1
     class_priors = Q.sum(dim=0)
     Q = Q / Q.sum(dim=1).view(-1, 1)
-    if transition_matrix == "noise":
+    if transition_matrix == "noisy":
         Q = get_transition_matrix("strong", train_set.num_classes, seed)
     return (
         train_loader,

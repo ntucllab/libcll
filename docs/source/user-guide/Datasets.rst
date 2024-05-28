@@ -22,17 +22,29 @@ Also, `libcll` provides 2 real-world datasets, **CLCIFAR10** and **CLCIFAR20**.
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
 | Control           | 6                 |  60         | Synthetic Control Chart Time Series                                                               |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
+| Tiny ImageNet10   | 10                | 3 x 64 x 64 | Contains images of 10 classes designed for computer vision research                               |
++-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
+| Tiny ImageNet20   | 20                | 3 x 64 x 64 | Contains images of 20 classes designed for computer vision research                               |
++-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
 | CIFAR10           | 10                | 3 x 32 x 32 | Colored images of distinct objects                                                                |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
 | CIFAR20           | 20                | 3 x 32 x 32 | Colored images of distinct objects                                                                |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
+| CLTiny ImageNet10 | 10                | 3 x 64 x 64 | Containing images of 10 classes designed for computer vision research                             |
+|                   |                   |             |                                                                                                   |
+|                   |                   |             | paired with complementary labels annotated by humans                                              |
++-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
+| CLTiny ImageNet10 | 20                | 3 x 64 x 64 | Containing images of 20 classes designed for computer vision research                             |
+|                   |                   |             |                                                                                                   |
+|                   |                   |             | paired with complementary labels annotated by humans                                              |
++-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
 | CLCIFAR10         | 10                | 3 x 32 x 32 | Colored images of distinct objects paired with                                                    |
 |                   |                   |             |                                                                                                   |
-|                   |                   |             | complementary labels annotated by human                                                           |
+|                   |                   |             | complementary labels annotated by humans                                                          |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
 | CLCIFAR20         | 20                | 3 x 32 x 32 | Colored images of distinct objects paired with                                                    |
 |                   |                   |             |                                                                                                   |
-|                   |                   |             | complementary labels annotated by human                                                           |
+|                   |                   |             | complementary labels annotated by humans                                                          |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
 
 Custom complementary-label dataset
@@ -91,7 +103,7 @@ Users can generate complementary labels based on their desired distribution by p
 |                   |                                                                                                                                    |
 |                   | where the diagonal elements are zero and all non-diagonal elements randomly set.                                                   |
 +-------------------+------------------------------------------------------------------------------------------------------------------------------------+
-|    ``noise``      | a noisy transition matrix where the diagonal elements are not necessary zero,                                                      |
+|    ``noisy``      | a noisy transition matrix where the diagonal elements are not necessary zero,                                                      |
 |                   |                                                                                                                                    |
 |                   | and equals to :math:`(1-\lambda)T_{\text{strong}}+\lambda\frac{1}{K}1_{K}`, :math:`\lambda` representing the weight of noise.      |
 +-------------------+------------------------------------------------------------------------------------------------------------------------------------+

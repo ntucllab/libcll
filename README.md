@@ -40,14 +40,18 @@ pip install -e .
 | Texture     | 11              | 40          | Features of different textures.                              |
 | Dermatology | 6               | 130         | Clinical Attributes of different diseases.                              |
 | Control     | 6               | 60          | Features of synthetically generated control charts.          |
-| CIFAR10     | 10              | 3 x 32 x 32 | Colored images of different objects.                         |
-| CLCIFAR10   | 10              | 3 x 32 x 32 | Colored images of distinct objects paired with complementary labels annotated by human |
+| Tiny ImageNet10   | 10                | 3 x 64 x 64 | Contains images of 10 classes designed for computer vision research. |
+| Tiny ImageNet20 | 20 | 3 x 64 x 64 | Contains images of 20 classes designed for computer vision research. |
+| CIFAR10 | 10 | 3 x 32 x 32 | Colored images of different objects. |
 | CIFAR20     | 20              | 3 x 32 x 32 | Colored images of different objects. |
-| CLCIFAR20   | 20              | 3 x 32 x 32 | Colored images of distinct objects paired with complementary labels annotated by human |
+| CLTiny ImageNet10 | 10 | 3 x 64 x 64 | Contains images of 10 classes designed for computer vision research paired with complementary labels annotated by humans. |
+| CLTiny ImageNet20 | 20 | 3 x 64 x 64 | Contains images of 20 classes designed for computer vision research paired with complementary labels annotated by humans. |
+| CLCIFAR10   | 10              | 3 x 32 x 32 | Colored images of distinct objects paired with complementary labels annotated by humans. |
+| CLCIFAR20   | 20              | 3 x 32 x 32 | Colored images of distinct objects paired with complementary labels annotated by humans. |
 
 ## Quick Start: Complementary Label Learning on MNIST
 
-To reproduce training result with SCL-NL method on MNIST
+To reproduce training results with SCL-NL method on MNIST
 
 ```shell
 python script/train.py \
@@ -68,14 +72,13 @@ or
 ./script/train.sh SCL NL MLP mnist Accuracy
 ```
 
-## Documentation
+# Documentation
 
 Find full [tutorials](https://libcll.readthedocs.io/en/latest/) for libcll.
 
-## Acknowledgment
+# Acknowledgment
 
 We thank the following repos for the code sharing.
 * [URE and FWD implementation](https://github.com/takashiishida/comp)
 * [DM official implementation](http://palm.seu.edu.cn/zhangml/Resources.htm#icml21b)
 * [Code structure](https://github.com/ntucllab/imbalanced-DL)
-

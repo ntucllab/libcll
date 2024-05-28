@@ -27,7 +27,7 @@ def collate_fn_multi_label(data):
     return torch.cat(x, 0), torch.cat(y, 0)
 
 
-def collate_fn_one_hot(data):
+def collate_fn_one_hot(data, num_classes):
     """
 
     Collate function. Store complementary labels into one-hot vectors.
@@ -36,13 +36,15 @@ def collate_fn_one_hot(data):
     ----------
     data:
         list of (image input, target) from dataset.
+    num_classes:
+        the number of classes.
 
     Returns
     -------
     (Tensor of **image inputs**, Tensor of **targets**)
     """
     x = []
-    y = torch.zeros(len(data), train_set.num_classes)
+    y = torch.zeros(len(data), num_classes)
     for i, (x_i, y_i) in enumerate(data):
         x.append(x_i)
         y[i][y_i.long()] = 1
@@ -106,7 +108,7 @@ def partial_uniform(num_classes, partial=6):
     return Q
 
 
-def noise_uniform(num_classes, noise=0.1, seed=1126):
+def noisy(num_classes, noise=0.1, seed=1126):
     Q = Strong(num_classes, seed)
     Q = (1 - noise) * Q + noise * torch.ones(num_classes, num_classes) / num_classes
     return Q
@@ -116,7 +118,7 @@ Q_LIST = {
     "uniform": Uniform,
     "weak": Weak,
     "strong": Strong,
-    "noise": noise_uniform,
+    "noisy": noisy,
 }
 
 
@@ -134,7 +136,7 @@ def get_transition_matrix(transition_matrix, num_classes, noise=0.1, seed=1126):
         the number of classes.
 
     noise : float
-        the noise weight in noise distribution.
+        the noise weight in noisy distribution.
 
     seed : int
         the random seed.
