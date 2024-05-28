@@ -22,19 +22,19 @@ Also, `libcll` provides 2 real-world datasets, **CLCIFAR10** and **CLCIFAR20**.
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
 | Control           | 6                 |  60         | Synthetic Control Chart Time Series                                                               |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
-| Tiny ImageNet10   | 10                | 3 x 64 x 64 | Contains images of 10 classes designed for computer vision research                               |
+| Micro ImageNet10  | 10                | 3 x 64 x 64 | Contains images of 10 classes designed for computer vision research                               |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
-| Tiny ImageNet20   | 20                | 3 x 64 x 64 | Contains images of 20 classes designed for computer vision research                               |
+| Micro ImageNet20  | 20                | 3 x 64 x 64 | Contains images of 20 classes designed for computer vision research                               |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
 | CIFAR10           | 10                | 3 x 32 x 32 | Colored images of distinct objects                                                                |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
 | CIFAR20           | 20                | 3 x 32 x 32 | Colored images of distinct objects                                                                |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
-| CLTiny ImageNet10 | 10                | 3 x 64 x 64 | Containing images of 10 classes designed for computer vision research                             |
+| CLMicro ImageNet10| 10                | 3 x 64 x 64 | Containing images of 10 classes designed for computer vision research                             |
 |                   |                   |             |                                                                                                   |
 |                   |                   |             | paired with complementary labels annotated by humans                                              |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
-| CLTiny ImageNet10 | 20                | 3 x 64 x 64 | Containing images of 20 classes designed for computer vision research                             |
+| CLMicro ImageNet20| 20                | 3 x 64 x 64 | Containing images of 20 classes designed for computer vision research                             |
 |                   |                   |             |                                                                                                   |
 |                   |                   |             | paired with complementary labels annotated by humans                                              |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+

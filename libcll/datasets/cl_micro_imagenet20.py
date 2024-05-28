@@ -10,7 +10,7 @@ import gdown
 import os
 
 
-class CLTiny_ImageNet10(torchvision.datasets.CIFAR10, CLBaseDataset):
+class CLMicro_ImageNet20(torchvision.datasets.CIFAR10, CLBaseDataset):
     """
 
     Real-world complementary-label dataset. Call ``gen_complementary_target()`` if you want to access synthetic complementary labels.
@@ -56,7 +56,7 @@ class CLTiny_ImageNet10(torchvision.datasets.CIFAR10, CLBaseDataset):
 
     def __init__(
         self,
-        root="./data/imagenet10",
+        root="./data/imagenet20",
         train=True,
         transform=None,
         target_transform=None,
@@ -64,11 +64,11 @@ class CLTiny_ImageNet10(torchvision.datasets.CIFAR10, CLBaseDataset):
         num_cl=1,
     ):
         if train:
-            dataset_path = f"{root}/cltiny_imagenet10_train.pkl"
-            gid = "1k02mwMpnBUM9de7TiJLBaCuS8myGuYFx"
+            dataset_path = f"{root}/clmicro_imagenet20_train.pkl"
+            gid = "1Urdxs_QTxbb1gDBpmjP09Q35btckI3_d"
         else:
-            dataset_path = f"{root}/cltiny_imagenet10_test.pkl"
-            gid = "1e8fZN8swbg9wc6BSOC0A5KHIqCY2C7me"
+            dataset_path = f"{root}/clmicro_imagenet20_test.pkl"
+            gid = "1EdBCrifSrIIUg1ioPWA-ZLEHO53P4NPl"
         if download and not os.path.exists(dataset_path):
             os.makedirs(root, exist_ok=True)
             gdown.download(id=gid, output=dataset_path)
@@ -82,5 +82,5 @@ class CLTiny_ImageNet10(torchvision.datasets.CIFAR10, CLBaseDataset):
         self.data = data["images"]
         self.transform = transform
         self.target_transform = target_transform
-        self.num_classes = 10
+        self.num_classes = 20
         self.input_dim = 3 * 64 * 64
