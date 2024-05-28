@@ -302,13 +302,13 @@ def prepare_dataloader(
             ]
         )
         train_set = CLTiny_ImageNet10(
-            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet10_complementary",
+            root="./data/imagenet10",
             train=True,
             transform=train_transform,
             num_cl=num_cl,
         )
         test_set = CLTiny_ImageNet10(
-            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet10_complementary",
+            root="./data/imagenet10",
             train=False,
             transform=test_transform,
             num_cl=num_cl,
@@ -332,13 +332,13 @@ def prepare_dataloader(
             ]
         )
         train_set = CLTiny_ImageNet20(
-            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet20_complementary",
+            root="./data/imagenet20",
             train=True,
             transform=train_transform,
             num_cl=num_cl,
         )
         test_set = CLTiny_ImageNet20(
-            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet20_complementary",
+            root="./data/imagenet20",
             train=False,
             transform=test_transform,
             num_cl=num_cl,
@@ -362,13 +362,13 @@ def prepare_dataloader(
             ]
         )
         train_set = CLTiny_ImageNet10(
-            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet10_complementary",
+            root="./data/imagenet10",
             train=True,
             transform=train_transform,
             num_cl=num_cl,
         )
         test_set = CLTiny_ImageNet10(
-            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet10_complementary",
+            root="./data/imagenet10",
             train=False,
             transform=test_transform,
             num_cl=num_cl,
@@ -390,13 +390,13 @@ def prepare_dataloader(
             ]
         )
         train_set = CLTiny_ImageNet20(
-            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet20_complementary",
+            root="./data/imagenet20",
             train=True,
             transform=train_transform,
             num_cl=num_cl,
         )
         test_set = CLTiny_ImageNet20(
-            root="/home/maitanha/Tiny_CLL_Data/tinyImageNet20_complementary",
+            root="./data/imagenet20",
             train=False,
             transform=test_transform,
             num_cl=num_cl,

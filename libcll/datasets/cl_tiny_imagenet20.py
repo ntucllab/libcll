@@ -10,7 +10,7 @@ import gdown
 import os
 
 
-class CLTiny_ImageNet20(torchvision.datasets.ImageFolder, CLBaseDataset):
+class CLTiny_ImageNet20(torchvision.datasets.CIFAR10, CLBaseDataset):
     """
 
     Real-world complementary-label dataset. Call ``gen_complementary_target()`` if you want to access synthetic complementary labels.
@@ -64,48 +64,23 @@ class CLTiny_ImageNet20(torchvision.datasets.ImageFolder, CLBaseDataset):
         num_cl=1,
     ):
         if train:
-            super(CLTiny_ImageNet20, self).__init__(
-                root=os.path.join(root, "train"),
-                transform=transform,
-                target_transform=target_transform,
-            )
-            label_to_folder = {}
-            file_to_cl = {}
-            with open(os.path.join(root, "words.txt"), "r") as f:
-                lines = [line.strip() for line in f.readlines()]
-                for line in lines:
-                    folder, labels = line.split("\t")
-                    label = labels.split(",")[0]
-                    label_to_folder[label] = folder
-            with open(os.path.join(root, "cll_human_words_tiny_20.txt"), "r") as f:
-                lines = [line.strip() for line in f.readlines()]
-                for line in lines:
-                    file_name, labels = line.split("\t")
-                    file_name = os.path.basename(file_name)
-                    labels = [
-                        self.class_to_idx[label_to_folder[label[1:-1]]]
-                        for label in labels.split(", ")
-                    ][:num_cl]
-                    file_to_cl[file_name] = labels
-            self.true_targets = torch.Tensor(self.targets)
-            self.targets = [
-                torch.Tensor(file_to_cl[os.path.basename(self.samples[i][0])])
-                for i in range(len(self.samples))
-            ]
+            dataset_path = f"{root}/cltiny_imagenet20_train.pkl"
+            gid = "1Urdxs_QTxbb1gDBpmjP09Q35btckI3_d"
         else:
-            super(CLTiny_ImageNet20, self).__init__(
-                root=os.path.join(root, "val"),
-                transform=transform,
-                target_transform=target_transform,
-            )
+            dataset_path = f"{root}/cltiny_imagenet20_test.pkl"
+            gid = "1EdBCrifSrIIUg1ioPWA-ZLEHO53P4NPl"
+        if download and not os.path.exists(dataset_path):
+            os.makedirs(root, exist_ok=True)
+            gdown.download(id=gid, output=dataset_path)
+        with open(dataset_path, "rb") as f:
+            data = pickle.load(f)
+        if train:
+            self.true_targets = torch.Tensor(data["ord_labels"]).view(-1)
+            self.targets = torch.Tensor(data["cl_labels"])[:, :num_cl]
+        else:
+            self.targets = torch.Tensor(data["ord_labels"]).view(-1)
+        self.data = data["images"]
+        self.transform = transform
+        self.target_transform = target_transform
         self.num_classes = 20
         self.input_dim = 3 * 64 * 64
-
-    def __getitem__(self, index):
-        path, target = self.samples[index][0], self.targets[index]
-        sample = self.loader(path)
-        if self.transform is not None:
-            sample = self.transform(sample)
-        if self.target_transform is not None:
-            target = self.target_transform(target)
-        return sample, target

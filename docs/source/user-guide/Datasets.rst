@@ -38,13 +38,9 @@ Also, `libcll` provides 2 real-world datasets, **CLCIFAR10** and **CLCIFAR20**.
 |                   |                   |             |                                                                                                   |
 |                   |                   |             | paired with complementary labels annotated by humans                                              |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
-| CLCIFAR10         | 10                | 3 x 32 x 32 | Colored images of distinct objects paired with                                                    |
-|                   |                   |             |                                                                                                   |
-|                   |                   |             | complementary labels annotated by humans                                                          |
+| CLCIFAR10         | 10                | 3 x 32 x 32 | Colored images of distinct objects paired with complementary labels annotated by humans           |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
-| CLCIFAR20         | 20                | 3 x 32 x 32 | Colored images of distinct objects paired with                                                    |
-|                   |                   |             |                                                                                                   |
-|                   |                   |             | complementary labels annotated by humans                                                          |
+| CLCIFAR10         | 10                | 3 x 32 x 32 | Colored images of distinct objects paired with complementary labels annotated by humans           |
 +-------------------+-------------------+-------------+---------------------------------------------------------------------------------------------------+
 
 Custom complementary-label dataset
