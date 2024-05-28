@@ -442,7 +442,7 @@ def prepare_dataloader(
     Q = torch.zeros((train_set.num_classes, train_set.num_classes))
     for idx in train_idx:
         Q[train_set.true_targets[idx].long()] += torch.histc(
-            train_set.targets[idx], train_set.num_classes, 0, train_set.num_classes
+            train_set.targets[idx].float(), train_set.num_classes, 0, train_set.num_classes
         )
     class_priors = Q.sum(dim=0)
     Q = Q / Q.sum(dim=1).view(-1, 1)
