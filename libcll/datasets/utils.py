@@ -155,5 +155,5 @@ def get_transition_matrix(transition_matrix, num_classes, noise=0.1, seed=1126):
         "seed": seed,
     }
     Q = Q_LIST[transition_matrix]
-    Q_args = inspect.getargspec(Q).args
+    Q_args = inspect.signature(Q).parameters
     return Q(**{arg: args[arg] for arg in args if arg in Q_args})

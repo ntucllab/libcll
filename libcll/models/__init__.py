@@ -22,5 +22,5 @@ def build_model(model, input_dim=None, hidden_dim=None, num_classes=None):
         "num_classes": num_classes,
     }
     model = MODEL_LIST[model]
-    model_args = inspect.getargspec(model.__init__).args
+    model_args = inspect.signature(model.__init__).parameters
     return model(**{arg: args[arg] for arg in args if arg in model_args})

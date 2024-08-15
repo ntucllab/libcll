@@ -18,7 +18,7 @@ For the beginners, we recommend SCL-NL method due to its simplicity and speed, a
 Installation
 ````````````
 
-- Python version >= 3.8, <= 3.10
+- Python version >= 3.8, <= 3.12
 - Pytorch version >= 1.11, <= 2.0
 - Pytorch Lightning version >= 2.0
 - To install `libcll` and develop locally:
