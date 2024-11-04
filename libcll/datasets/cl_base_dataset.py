@@ -3,6 +3,7 @@ import copy
 import torch
 from torch.utils.data import Dataset
 import torch.nn.functional as F
+import math
 
 
 class CLBaseDataset(Dataset):
@@ -79,7 +80,7 @@ class CLBaseDataset(Dataset):
             p_s[0] = self.num_classes - 1
             for i in range(1, p_s.shape[0]):
                 p_s[i] = p_s[i - 1] * (p_s.shape[0] - i) / (i + 1)
-            p_s /= 2 ** (self.num_classes - 1) - 1
+            p_s /= math.pow(2, self.num_classes - 1) - 1
         for i in range(len(self.true_targets)):
             if num_cl == 0:
                 nc = np.random.choice(

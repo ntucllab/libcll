@@ -1,7 +1,8 @@
 import torchvision
-from libcll.datasets.cl_base_dataset import CLBaseDataset
 import torchvision.transforms as transforms
 from PIL import Image
+from libcll.datasets.cl_base_dataset import CLBaseDataset
+from libcll.datasets.utils import get_transition_matrix
 
 
 class CLKMNIST(torchvision.datasets.KMNIST, CLBaseDataset):
@@ -68,3 +69,13 @@ class CLKMNIST(torchvision.datasets.KMNIST, CLBaseDataset):
             target = self.target_transform(target)
 
         return img, target
+    
+    @classmethod
+    def build_dataset(self, dataset_name=None, train=True, num_cl=0, transition_matrix=None, noise=None, seed=1126):
+        if train:
+            dataset = self(train=True)
+            Q = get_transition_matrix(transition_matrix, dataset.num_classes, noise, seed)
+            dataset.gen_complementary_target(num_cl, Q)
+        else:
+            dataset = self(train=False)
+        return dataset

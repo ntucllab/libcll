@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 from omegacli import parse_config, OmegaConf
 from libcll.models import build_model
 from libcll.strategies import build_strategy
-from libcll.datasets import prepare_dataloader
+from libcll.datasets import prepare_cl_data_module
 import pytorch_lightning as pl
 from pytorch_lightning import loggers as pl_loggers
 from pytorch_lightning.callbacks import ModelCheckpoint
@@ -17,20 +17,24 @@ import random
 def main(args):
     print("Preparing Dataset......")
     pl.seed_everything(args.training.seed, workers=True)
-    train_loader, valid_loader, test_loader, input_dim, num_classes, Q, class_priors = (
-        prepare_dataloader(
-            args.dataset._name,
-            batch_size=args.training.batch_size,
-            valid_split=args.training.valid_split,
-            valid_type=args.training.valid_type,
-            one_hot=(args.strategy._name == "MCL"),
-            num_cl=args.dataset.num_cl,
-            transition_matrix=args.dataset.transition_matrix,
-            augment=args.dataset.augment,
-            noise=args.dataset.noise,
-            seed=args.training.seed,
-        )
+    cl_data_module = prepare_cl_data_module(
+        args.dataset._name,
+        batch_size=args.training.batch_size,
+        valid_split=args.dataset.valid_split,
+        valid_type=args.training.valid_type,
+        one_hot=(args.strategy._name == "MCL"),
+        num_cl=args.dataset.num_cl,
+        transition_matrix=args.dataset.transition_matrix,
+        augment=args.dataset.augment,
+        noise=args.dataset.noise,
+        seed=args.training.seed,
     )
+    cl_data_module.prepare_data()
+    cl_data_module.setup(stage="fit")
+    train_loader, valid_loader, test_loader = cl_data_module.train_dataloader(), cl_data_module.val_dataloader(), cl_data_module.test_dataloader()
+
+    input_dim, num_classes = cl_data_module.train_set.input_dim, cl_data_module.train_set.num_classes
+    Q, class_priors = cl_data_module.get_distribution_info()
     print("Preparing Model......")
 
     pl.seed_everything(args.training.seed, workers=True)
@@ -90,10 +94,15 @@ def main(args):
         )
     if args.training.do_predict:
         if args.training.do_train:
-            trainer.test(dataloaders=test_loader, ckpt_path="best")
+            trainer.test(
+                dataloaders=test_loader,  
+                ckpt_path="best"
+            )
         else:
             trainer.test(
-                strategy, dataloaders=test_loader, ckpt_path=args.training.model_path
+                strategy, 
+                dataloaders=test_loader, 
+                ckpt_path=args.training.model_path
             )
 
 
@@ -115,7 +124,7 @@ def parse_args():
     )
     parser.add_argument("--num_cl", dest="dataset.num_cl", type=int, default=1)
     parser.add_argument(
-        "--valid_split", dest="training.valid_split", type=float, default=0.1
+        "--valid_split", dest="dataset.valid_split", type=float, default=0.1
     )
     parser.add_argument(
         "--eval_epoch", dest="training.eval_epoch", type=int, default=10

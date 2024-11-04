@@ -1,9 +1,12 @@
 import torch
 import torchvision
-from libcll.datasets.cl_base_dataset import CLBaseDataset
+import torchvision.transforms as transforms
+import numpy as np
 import pickle
 import gdown
 import os
+from libcll.datasets.cl_base_dataset import CLBaseDataset
+from libcll.datasets.utils import get_transition_matrix
 
 
 def _cifar100_to_cifar20(target):
@@ -174,7 +177,7 @@ class CLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
                 )
             with open(dataset_path, "rb") as f:
                 data = pickle.load(f)
-            self.data = data["images"]
+            self.data = np.array(data["images"])
             self.true_targets = torch.Tensor(data["ord_labels"]).view(-1)
             self.targets = torch.Tensor(data["cl_labels"])[:, :num_cl]
             self.transform = transform
@@ -188,3 +191,38 @@ class CLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
 
         self.num_classes = 20
         self.input_dim = 3 * 32 * 32
+    
+    @classmethod
+    def build_dataset(self, dataset_name=None, train=True, num_cl=0, transition_matrix=None, noise=None, seed=1126):
+        if train:
+            train_transform = transforms.Compose(
+                [
+                    transforms.RandomHorizontalFlip(),
+                    transforms.RandomCrop(32, padding=4),
+                    transforms.ToTensor(),
+                    transforms.Normalize(
+                        [0.4914, 0.4822, 0.4465], [0.247, 0.2435, 0.2616]
+                    ),
+                ]
+            )
+            dataset = self(
+                train=True,
+                transform=train_transform,
+                num_cl=num_cl, 
+            )
+            if dataset_name == "cifar20":
+                Q = get_transition_matrix(transition_matrix, dataset.num_classes, noise, seed)
+                dataset.gen_complementary_target(num_cl, Q)
+        else:
+            test_transform = transforms.Compose(
+                [
+                    transforms.ToTensor(),
+                    transforms.Normalize([0.4914, 0.4822, 0.4465], [0.247, 0.2435, 0.2616]),
+                ]
+            )
+            dataset = self(
+                train=False,
+                transform=test_transform,
+                num_cl=num_cl, 
+            )
+        return dataset

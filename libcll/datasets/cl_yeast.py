@@ -1,11 +1,12 @@
 import torch
-import numpy as np
 from torch.utils.data import Dataset
+import torchvision
+import torchvision.transforms as transforms
+import numpy as np
 from sklearn.datasets import fetch_openml
 from sklearn.preprocessing import LabelEncoder
-import torchvision
 from libcll.datasets.cl_base_dataset import CLBaseDataset
-import torchvision.transforms as transforms
+from libcll.datasets.utils import get_transition_matrix
 
 
 class CLYeast(CLBaseDataset):
@@ -78,3 +79,13 @@ class CLYeast(CLBaseDataset):
             self.targets = torch.Tensor(
                 self.targets[idx[int(self.val_split * len(idx)) :]]
             )
+    
+    @classmethod
+    def build_dataset(self, dataset_name=None, train=True, num_cl=0, transition_matrix=None, noise=None, seed=1126):
+        if train:
+            dataset = self(train=True)
+            Q = get_transition_matrix(transition_matrix, dataset.num_classes, noise, seed)
+            dataset.gen_complementary_target(num_cl, Q)
+        else:
+            dataset = self(train=False)
+        return dataset

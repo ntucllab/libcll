@@ -1,13 +1,12 @@
 import torch
 import torchvision
-from libcll.datasets.cl_base_dataset import CLBaseDataset
+import torchvision.transforms as transforms
 import numpy as np
-from PIL import Image
-import urllib.request
-from tqdm import tqdm
 import pickle
 import gdown
 import os
+from libcll.datasets.cl_base_dataset import CLBaseDataset
+from libcll.datasets.utils import get_transition_matrix
 
 
 class CLMicro_ImageNet10(torchvision.datasets.CIFAR10, CLBaseDataset):
@@ -84,3 +83,36 @@ class CLMicro_ImageNet10(torchvision.datasets.CIFAR10, CLBaseDataset):
         self.target_transform = target_transform
         self.num_classes = 10
         self.input_dim = 3 * 64 * 64
+    
+    @classmethod
+    def build_dataset(self, dataset_name=None, train=True, num_cl=0, transition_matrix=None, noise=None, seed=1126):
+        if train:
+            train_transform = transforms.Compose(
+                [
+                    transforms.RandomCrop(64, padding=8),
+                    transforms.RandomHorizontalFlip(),
+                    transforms.ToTensor(),
+                    transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+                ]
+            )
+            dataset = self(
+                train=True,
+                transform=train_transform,
+                num_cl=num_cl, 
+            )
+            if dataset_name == "micro_imagenet10":
+                Q = get_transition_matrix(transition_matrix, dataset.num_classes, noise, seed)
+                dataset.gen_complementary_target(num_cl, Q)
+        else:
+            test_transform = transforms.Compose(
+                [
+                    transforms.ToTensor(),
+                    transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+                ]
+            )
+            dataset = self(
+                train=False,
+                transform=test_transform,
+                num_cl=num_cl, 
+            )
+        return dataset
