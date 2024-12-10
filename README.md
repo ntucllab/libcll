@@ -2,7 +2,9 @@
 
 [![Documentation Status](https://readthedocs.org/projects/libcll/badge/?version=latest)](https://libcll.readthedocs.io/en/latest/?badge=latest) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-`libcll` is a Python package designed to make complementary label learning easier for real-world researchers. The package not only implements most of the popular complementary label learning strategies, including CPE, a SOTA algorithm in 2023 but also features CLCIFAR10 and CLCIFAR20 datasets, both of which collect complementary labels from humans.  In addition, the package provides a unified interface for adding more strategies, datasets, and models. 
+<img src="docs/libcll.png" alt="libcll" style="zoom:25%;" />
+
+`libcll` is a Python library designed to simplify complementary-label learning (CLL) for researchers tackling real-world challenges. The package implements a wide range of popular CLL strategies, including **CPE**, the state-of-the-art algorithm as of 2023. Additionally, it includes unique datasets like **CLCIFAR10**, **CLCIFAR20**, **CLMIN10**, and **CLMIN20**, which feature complementary labels collected from human annotators. To foster extensibility, `libcll` provides a unified interface for integrating additional strategies, datasets, and models, making it a versatile tool for advancing CLL research. For more details, refer to the associated technical report on [arXiv](https://arxiv.org/abs/2411.12276).
 
 # Installation
 
@@ -12,6 +14,7 @@
 - To install `libcll` and develop locally:
 
 ```
+git clone git@github.com:ntucllab/libcll.git
 cd libcll
 pip install -e .
 ```
@@ -51,7 +54,7 @@ pip install -e .
 
 ## Quick Start: Complementary Label Learning on MNIST
 
-To reproduce training results with SCL-NL method on MNIST
+To reproduce training results with the SCL-NL method on MNIST
 
 ```shell
 python script/train.py \
@@ -66,19 +69,29 @@ python script/train.py \
   --valid_type Accuracy \
 ```
 
-or
-
-```
-./script/train.sh SCL NL MLP mnist Accuracy
-```
-
 # Documentation
 
-Find full [tutorials](https://libcll.readthedocs.io/en/latest/) for libcll.
+The documentation for the latest release is available on [readthedocs](https://libcll.readthedocs.io/en/latest/). Feedback, questions, and suggestions are highly encouraged. Contributions to improve the documentation are warmly welcomed and greatly appreciated!
+
+# Citing
+
+If you find this package useful, please cite both the original works associated with each strategy and the following:
+
+```
+@techreport{libcll2024,
+  author = {Nai-Xuan Ye and Tan-Ha Mai and Hsiu-Hsuan Wang and Wei-I Lin and Hsuan-Tien Lin},
+  title = {libcll: an Extendable Python Toolkit for Complementary-Label Learning},
+  institution = {National Taiwan University},
+  url = {https://github.com/ntucllab/libcll},
+  note = {available as arXiv preprint \url{https://arxiv.org/abs/2411.12276}},
+  month = nov,
+  year = 2024
+}
+```
 
 # Acknowledgment
 
-We thank the following repos for the code sharing.
+We would like to express our gratitude to the following repositories for sharing their code, which greatly facilitated the development of `libcll`:
 * [URE and FWD implementation](https://github.com/takashiishida/comp)
 * [DM official implementation](http://palm.seu.edu.cn/zhangml/Resources.htm#icml21b)
 * [Code structure](https://github.com/ntucllab/imbalanced-DL)
