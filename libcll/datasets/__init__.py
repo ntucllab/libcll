@@ -5,11 +5,15 @@ from .cl_yeast import CLYeast
 from .cl_texture import CLTexture
 from .cl_control import CLControl
 from .cl_dermatology import CLDermatology
+from .acl_cifar10 import ACLCIFAR10
+from .acl_cifar20 import ACLCIFAR20
 from .cl_fmnist import CLFMNIST
 from .cl_kmnist import CLKMNIST
 from .cl_mnist import CLMNIST
 from .cl_micro_imagenet10 import CLMicro_ImageNet10
 from .cl_micro_imagenet20 import CLMicro_ImageNet20
+from .acl_micro_imagenet10 import ACLMicro_ImageNet10
+from .acl_micro_imagenet20 import ACLMicro_ImageNet20
 
 D_LIST = {
     "mnist": CLMNIST, 
@@ -17,6 +21,8 @@ D_LIST = {
     "fmnist": CLFMNIST, 
     "cifar10": CLCIFAR10, 
     "cifar20": CLCIFAR20, 
+    "aclcifar10": ACLCIFAR10, 
+    "aclcifar10": ACLCIFAR20, 
     "yeast": CLYeast, 
     "control": CLControl, 
     "dermatology": CLDermatology, 
@@ -27,6 +33,8 @@ D_LIST = {
     "clcifar20": CLCIFAR20, 
     "clmicro_imagenet10": CLMicro_ImageNet10, 
     "clmicro_imagenet20": CLMicro_ImageNet20, 
+    "aclmicro_imagenet10": ACLMicro_ImageNet10, 
+    "aclmicro_imagenet20": ACLMicro_ImageNet20, 
 }
 
 def prepare_cl_data_module(

@@ -5,6 +5,9 @@ from .MCL import MCL
 from .FWD import FWD
 from .DM import DM
 from .CPE import CPE
+from .OP import OP
+from .PC import PC
+from .SCARCE import SCARCE
 
 STRATEGY_LIST = {
     "SCL": SCL,
@@ -13,6 +16,9 @@ STRATEGY_LIST = {
     "FWD": FWD,
     "DM": DM,
     "CPE": CPE,
+    "OP": OP, 
+    "PC": PC, 
+    "SCARCE": SCARCE, 
 }
 
 

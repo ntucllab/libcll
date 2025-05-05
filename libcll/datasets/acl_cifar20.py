@@ -8,7 +8,6 @@ import os
 from libcll.datasets.cl_base_dataset import CLBaseDataset
 from libcll.datasets.utils import get_transition_matrix
 
-
 def _cifar100_to_cifar20(target):
     # obtained from cifar_test script
     _dict = {
@@ -117,11 +116,11 @@ def _cifar100_to_cifar20(target):
     return _dict[target]
 
 
-class CLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
+class ACLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
     """
 
-    Real-world complementary-label dataset. Call ``gen_complementary_target()`` if you want to access synthetic complementary labels.
-
+    Real-world complementary-label dataset annotated by VLM. Call ``gen_complementary_target()`` if you want to access synthetic complementary labels.
+    
     Parameters
     ----------
     root : str
@@ -171,21 +170,21 @@ class CLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
         num_cl=1,
     ):
         if train:
-            dataset_path = f"{root}/clcifar20.pkl"
+            dataset_path = f"{root}/aclcifar20.pkl"
             if download and not os.path.exists(dataset_path):
                 os.makedirs(root, exist_ok=True)
                 gdown.download(
-                    id="1PhZsyoi1dAHDGlmB4QIJvDHLf_JBsFeP", output=dataset_path
+                    id="12MVz5gRKKXrznELt3NholwAmnvvCVJGh", output=dataset_path
                 )
             with open(dataset_path, "rb") as f:
                 data = pickle.load(f)
-            self.data = np.array(data["images"])
+            self.data = data["images"]
             self.true_targets = torch.Tensor(data["ord_labels"]).view(-1)
             self.targets = torch.Tensor(data["cl_labels"])[:, :num_cl]
             self.transform = transform
             self.target_transform = target_transform
         else:
-            super(CLCIFAR20, self).__init__(
+            super(ACLCIFAR20, self).__init__(
                 root, train, transform, target_transform, download
             )
             self.targets = [_cifar100_to_cifar20(i) for i in self.targets]
@@ -193,7 +192,7 @@ class CLCIFAR20(torchvision.datasets.CIFAR100, CLBaseDataset):
 
         self.num_classes = 20
         self.input_dim = 3 * 32 * 32
-    
+
     @classmethod
     def build_dataset(self, dataset_name=None, train=True, num_cl=0, transition_matrix=None, noise=None, seed=1126):
         if train:
