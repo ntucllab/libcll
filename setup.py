@@ -6,10 +6,10 @@ with open("./requirements.txt") as f:
 setup(
     name="libcll",
     version="1.0.0",
-    description="Pool-based cllive learning in Python",
-    author="N.-X. Ye, H.-H. Wang, H.-T. Lin",
-    author_email="b09902008@csie.ntu.edu.tw, b09902033@csie.ntu.edu.tw, empennage98@gmail.com",
-    url="https://github.com/yahcreepers/libcll",
+    description="ibcll: an extendable python toolkit for complementary-label learning",
+    author="N.-X. Ye, T.-H. Mai, H.-H. Wang, W.-I. Lin, H.-T. Lin",
+    author_email="b09902008@csie.ntu.edu.tw, d10922024@csie.ntu.edu.tw, b09902033@csie.ntu.edu.tw, empennage98@gmail.com",
+    url="https://github.com/ntucllab/libcll",
     install_requires=install_requires,
     classifiers=[
         "Topic :: Scientific/Engineering",
