@@ -23,14 +23,17 @@ pip install -e .
 
 ## Supported Strategies
 
-| Strategies                                                | Type             | Description                                                  |
-| --------------------------------------------------------- | ---------------- | ------------------------------------------------------------ |
-| [SCL](https://arxiv.org/pdf/2007.02235.pdf)               | NL, EXP          | Surrogate Complementary Loss with the negative log loss (NL) or with the exponential loss (EXP) |
-| [URE](https://arxiv.org/pdf/1810.04327.pdf)               | NN, GA, TNN, TGA | Unbiased Risk Estimator whether with gradient ascent (GA) or empirical transition matrix (T) |
-| [FWD](https://arxiv.org/pdf/1711.09535.pdf)               | None             | Forward Correction                                           |
-| [DM](http://proceedings.mlr.press/v139/gao21d/gao21d.pdf) | None             | Discriminative Models with Weighted Loss                     |
-| [CPE](https://arxiv.org/pdf/2209.09500.pdf)               | I, F, T          | Complementary Probability Estimates with different transition matrices (I, F, T) |
-| [MCL](https://arxiv.org/pdf/1912.12927.pdf)               | MAE, EXP, LOG    | Multiple Complementary Label learning with different errors (MAE, EXP, LOG) |
+| Strategies                                                 | Type             | Description                                                  |
+| ---------------------------------------------------------- | ---------------- | ------------------------------------------------------------ |
+| [PC](https://arxiv.org/pdf/1705.07541)                     | None             | Pairwise-Comparison Loss                                     |
+| [SCL](https://arxiv.org/pdf/2007.02235.pdf)                | NL, EXP          | Surrogate Complementary Loss with the negative log loss (NL) or with the exponential loss (EXP) |
+| [URE](https://arxiv.org/pdf/1810.04327.pdf)                | NN, GA, TNN, TGA | Unbiased Risk Estimator whether with gradient ascent (GA) or empirical transition matrix (T) |
+| [FWD](https://arxiv.org/pdf/1711.09535.pdf)                | None             | Forward Correction                                           |
+| [DM](http://proceedings.mlr.press/v139/gao21d/gao21d.pdf)  | None             | Discriminative Models with Weighted Loss                     |
+| [CPE](https://arxiv.org/pdf/2209.09500.pdf)                | I, F, T          | Complementary Probability Estimates with different transition matrices (I, F, T) |
+| [MCL](https://arxiv.org/pdf/1912.12927.pdf)                | MAE, EXP, LOG    | Multiple Complementary Label learning with different errors (MAE, EXP, LOG) |
+| [OP](https://proceedings.mlr.press/v206/liu23g/liu23g.pdf) | None             | Order-Preserving Loss                                        |
+| [SCARCE](https://arxiv.org/pdf/2311.15502)                 | None             | Selected-Completely-At-Random Complementary-label learning   |
 
 ## Supported Datasets
 
@@ -43,14 +46,18 @@ pip install -e .
 | Texture     | 11              | 40          | Features of different textures.                              |
 | Dermatology | 6               | 130         | Clinical Attributes of different diseases.                              |
 | Control     | 6               | 60          | Features of synthetically generated control charts.          |
-| Micro ImageNet10   | 10                | 3 x 64 x 64 | Contains images of 10 classes designed for computer vision research. |
-| Micro ImageNet20 | 20 | 3 x 64 x 64 | Contains images of 20 classes designed for computer vision research. |
 | CIFAR10 | 10 | 3 x 32 x 32 | Colored images of different objects. |
 | CIFAR20     | 20              | 3 x 32 x 32 | Colored images of different objects. |
-| CLMicro ImageNet10 | 10 | 3 x 64 x 64 | Contains images of 10 classes designed for computer vision research paired with complementary labels annotated by humans. |
-| CLMicro ImageNet20 | 20 | 3 x 64 x 64 | Contains images of 20 classes designed for computer vision research paired with complementary labels annotated by humans. |
+| Micro ImageNet10   | 10                | 3 x 64 x 64 | Contains images of 10 classes designed for computer vision research. |
+| Micro ImageNet20 | 20 | 3 x 64 x 64 | Contains images of 20 classes designed for computer vision research. |
 | CLCIFAR10   | 10              | 3 x 32 x 32 | Colored images of distinct objects paired with complementary labels annotated by humans. |
 | CLCIFAR20   | 20              | 3 x 32 x 32 | Colored images of distinct objects paired with complementary labels annotated by humans. |
+| CLMicro ImageNet10 | 10 | 3 x 64 x 64 | Contains images of 10 classes designed for computer vision research paired with complementary labels annotated by humans. |
+| CLMicro ImageNet20 | 20 | 3 x 64 x 64 | Contains images of 20 classes designed for computer vision research paired with complementary labels annotated by humans. |
+| ACLCIFAR10   | 10              | 3 x 32 x 32 | Colored images of distinct objects paired with complementary labels annotated by Visual-Language Models. |
+| ACLCIFAR20   | 20              | 3 x 32 x 32 | Colored images of distinct objects paired with complementary labels annotated by Visual-Language Models. |
+| ACLMicro ImageNet10 | 10 | 3 x 64 x 64 | Contains images of 10 classes designed for computer vision research paired with complementary labels annotated by Visual-Language Models. |
+| ACLMicro ImageNet20 | 20 | 3 x 64 x 64 | Contains images of 20 classes designed for computer vision research paired with complementary labels annotated by Visual-Language Models. |
 
 ## Quick Start: Complementary Label Learning on MNIST
 
@@ -94,4 +101,6 @@ If you find this package useful, please cite both the original works associated 
 We would like to express our gratitude to the following repositories for sharing their code, which greatly facilitated the development of `libcll`:
 * [URE and FWD implementation](https://github.com/takashiishida/comp)
 * [DM official implementation](http://palm.seu.edu.cn/zhangml/Resources.htm#icml21b)
+* [OP official implementation](https://github.com/yzcao-nkg/OPCLL)
+* [SCARCE official implementation](https://github.com/wwangwitsel/SCARCE/tree/main)
 * [Code structure](https://github.com/ntucllab/imbalanced-DL)
