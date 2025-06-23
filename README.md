@@ -64,7 +64,7 @@ pip install -e .
 To reproduce training results with the SCL-NL method on MNIST
 
 ```shell
-python script/train.py \
+python scripts/train.py \
   --do_train \
   --do_predict \
   --strategy SCL \
