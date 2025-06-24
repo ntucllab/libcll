@@ -7,8 +7,10 @@ dataset=$5
 valid_type=$6
 num_cl=$7
 transition_matrix=$8
+lr=$9
+seed=${10}
 
-output_dir="logs/${strategy}/${dataset}-multi_label_${num_cl}-${transition_matrix}/${strategy}-${tp}-${model}-${dataset}"
+output_dir="logs/${strategy}/${dataset}-multi_label_${num_cl}-${transition_matrix}/${strategy}-${tp}-${model}-${dataset}-${lr}-${seed}"
 python scripts/train.py \
     --do_train \
     --do_predict \
@@ -16,10 +18,14 @@ python scripts/train.py \
     --type ${tp} \
     --model ${model} \
     --dataset ${dataset} \
-    --lr 1e-4 \
+    --lr ${lr} \
     --batch_size 256 \
     --augment \
     --valid_type ${valid_type} \
     --output_dir ${output_dir} \
     --num_cl ${num_cl} \
     --transition_matrix ${transition_matrix}\
+    --epoch 300 \
+    --seed ${seed} \
+
+rm ${output_dir}/*.ckpt

@@ -42,10 +42,10 @@ pip install -e .
 | MNIST       | 10              | 28 x 28     | Grayscale images of handwritten digits (0 to 9).             |
 | FMNIST      | 10              | 28 x 28     | Grayscale images of fashion items.                           |
 | KMNIST      | 10              | 28 x 28     | Grayscale images of cursive Japanese (“Kuzushiji”) characters. |
-| Yeast       | 10              | 8           | Features of different localization sites of protein.         |
-| Texture     | 11              | 40          | Features of different textures.                              |
-| Dermatology | 6               | 130         | Clinical Attributes of different diseases.                              |
-| Control     | 6               | 60          | Features of synthetically generated control charts.          |
+| [Yeast](https://www.openml.org/search?type=data&status=active&id=181) | 10              | 8           | Features of different localization sites of protein.         |
+| [Texture](https://www.openml.org/search?type=data&status=active&id=40499) | 11              | 40          | Features of different textures.                              |
+| [Dermatology](https://www.openml.org/search?type=data&status=active&id=35) | 6               | 130         | Clinical Attributes of different diseases.                              |
+| [Control](https://www.openml.org/search?type=data&status=active&id=377) | 6               | 60          | Features of synthetically generated control charts.          |
 | CIFAR10 | 10 | 3 x 32 x 32 | Colored images of different objects. |
 | CIFAR20     | 20              | 3 x 32 x 32 | Colored images of different objects. |
 | Micro ImageNet10   | 10                | 3 x 64 x 64 | Contains images of 10 classes designed for computer vision research. |
@@ -64,7 +64,7 @@ pip install -e .
 To reproduce training results with the SCL-NL method on MNIST
 
 ```shell
-python scripts/train.py \
+python script/train.py \
   --do_train \
   --do_predict \
   --strategy SCL \
@@ -74,6 +74,28 @@ python scripts/train.py \
   --lr 1e-4 \
   --batch_size 256 \
   --valid_type Accuracy \
+```
+
+## Run all the settings in the survey paper
+
+To reproduce results in survey paper:
+
+```shell
+./scripts/uniform.sh <strategy> <type>
+./scripts/biased.sh <strategy> <type>
+./scripts/noisy.sh <strategy> <type>
+./scripts/multi.sh <strategy> <type>
+./scripts/multi_hard.sh <strategy> <type>
+```
+
+For example:
+
+```shell
+./scripts/uniform.sh SCL NL
+./scripts/biased.sh SCL NL
+./scripts/noisy.sh SCL NL
+./scripts/multi.sh SCL NL
+./scripts/multi_hard.sh SCL NL
 ```
 
 # Documentation
