@@ -61,10 +61,12 @@ pip install -e .
 
 ## Quick Start: Complementary Label Learning on MNIST
 
-To reproduce training results with the SCL-NL method on MNIST
+To reproduce training results with the SCL-NL method on MNIST for each distribution:
+
+### Uniform Distribution
 
 ```shell
-python script/train.py \
+python scripts/train.py \
   --do_train \
   --do_predict \
   --strategy SCL \
@@ -76,9 +78,72 @@ python script/train.py \
   --valid_type Accuracy \
 ```
 
+### Biased Distribution (Weak Deviation)
+
+```shell
+python scripts/train.py \
+  --do_train \
+  --do_predict \
+  --strategy SCL \
+  --type NL \
+  --model MLP \
+  --dataset MNIST \
+  --lr 1e-4 \
+  --batch_size 256 \
+  --valid_type Accuracy \
+  --transition_matrix weak
+```
+### Biased Distribution (Strong Deviation)
+
+```shell
+python scripts/train.py \
+  --do_train \
+  --do_predict \
+  --strategy SCL \
+  --type NL \
+  --model MLP \
+  --dataset MNIST \
+  --lr 1e-4 \
+  --batch_size 256 \
+  --valid_type Accuracy \
+  --transition_matrix strong
+```
+
+### Noisy Distribution
+
+```shell
+python scripts/train.py \
+  --do_train \
+  --do_predict \
+  --strategy SCL \
+  --type NL \
+  --model MLP \
+  --dataset MNIST \
+  --lr 1e-4 \
+  --batch_size 256 \
+  --valid_type Accuracy \
+  --transition_matrix noisy
+  --noise 0.1
+```
+### Multiple Complementary Label Learning
+
+```shell
+python scripts/train.py \
+  --do_train \
+  --do_predict \
+  --strategy SCL \
+  --type NL \
+  --model MLP \
+  --dataset MNIST \
+  --lr 1e-4 \
+  --batch_size 256 \
+  --valid_type Accuracy \
+  --num_cl 3
+```
+
 ## Run all the settings in the survey paper
 
-To reproduce results in survey paper:
+The following scripts reproduce the results for one strategy presented in the survey paper. They include a grid search over learning rates from {1e-3, 5e-4, 1e-4, 5e-5, 1e-5}, followed by training with the best learning rate using four different random seeds.
 
 ```shell
 ./scripts/uniform.sh <strategy> <type>
