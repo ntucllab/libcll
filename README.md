@@ -190,4 +190,6 @@ We would like to express our gratitude to the following repositories for sharing
 * [DM official implementation](http://palm.seu.edu.cn/zhangml/Resources.htm#icml21b)
 * [OP official implementation](https://github.com/yzcao-nkg/OPCLL)
 * [SCARCE official implementation](https://github.com/wwangwitsel/SCARCE/tree/main)
+* [CLImage Dataset implementation](https://github.com/ntucllab/CLImage_Dataset)
+* [ACLImage Dataset implementation](https://github.com/yahcreepers/PAKDD_ACLImage_Dataset)
 * [Code structure](https://github.com/ntucllab/imbalanced-DL)
