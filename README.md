@@ -2,7 +2,7 @@
 
 [![Documentation Status](https://readthedocs.org/projects/libcll/badge/?version=latest)](https://libcll.readthedocs.io/en/latest/?badge=latest) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-<img src="docs/libcll.png" alt="libcll" style="zoom:25%;" />
+<img src="docs/libcll-cover.png" alt="libcll" style="zoom:25%;" />
 
 `libcll` is a Python library designed to simplify complementary-label learning (CLL) for researchers tackling real-world challenges. The package implements a wide range of popular CLL strategies, including **CPE**, the state-of-the-art algorithm as of 2023. Additionally, it includes unique datasets like **CLImage** and **ACLImage**, which feature complementary labels collected from human annotators and VLM annotators. To foster extensibility, `libcll` provides a unified interface for integrating additional strategies, datasets, and models, making it a versatile tool for advancing CLL research. For more details, refer to the associated technical report on [arXiv](https://arxiv.org/abs/2411.12276).
 
